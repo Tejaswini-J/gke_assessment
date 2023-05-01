@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernetes-deployment
+spec:
+  selector:
+    matchLabels:
+      name: test-kubernetes
+  template:
+    metadata:
+      labels:
+        name: test-kubernetes
+    spec:
+      containers:
+      - name: test-app
+        image: java/test-kubernetes:1.10.1 # image used to deploy the application
+        ports:
+          - containerPort: 8080 # Port that the container is running on the cluster
+        env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: KUBERNETES_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName

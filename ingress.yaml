@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-kubernetes
+  annotations:
+    cloud.google.com/load-balancer-type: "External"
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: / 
+        pathType: Prefix
+        backend:
+          service:
+            name: test-kubernetes
+            port:
+              number: 80 # port exposed by the service 
